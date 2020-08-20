@@ -2,6 +2,7 @@
 import { css, jsx } from "@emotion/core"
 import { Fragment, ReactNode } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import Footer from "./footer"
 
 import Header from "./header"
 import "./layout.css"
@@ -16,11 +17,7 @@ export default function Layout({ children }: LayoutProps) {
       <Header />
       <div>
         <main css={grid}>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
+        <Footer />
       </div>
     </Fragment>
   )
@@ -29,4 +26,5 @@ export default function Layout({ children }: LayoutProps) {
 const grid = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 0.5rem;
 `

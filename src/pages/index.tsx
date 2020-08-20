@@ -5,15 +5,48 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
-import Logo from "../components/logo"
-import BackgroundImage from "gatsby-background-image-es5"
+import { meetsContrastGuidelines } from "polished"
+import {
+  colors,
+  spacer,
+  leftTwoThirds,
+  rightTwoThirds,
+  fullWidth,
+  allThirds,
+  leftThird,
+  rightThird,
+  centerThird,
+  spacing,
+} from "../styles"
+import Hero from "../components/hero"
 
 export default function IndexPage() {
-  const queryResult = useStaticQuery(graphql`
+  const images = useStaticQuery(graphql`
     query {
-      placeholderImage: file(relativePath: { eq: "split-field.jpeg" }) {
+      hero: file(relativePath: { eq: "heros/home.jpeg" }) {
         childImageSharp {
           fluid(maxWidth: 1000) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+      lesson1: file(relativePath: { eq: "lessons/beach.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 500) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+      lesson2: file(relativePath: { eq: "lessons/bibles.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 500) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+      lesson3: file(relativePath: { eq: "lessons/bird.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 500) {
             ...GatsbyImageSharpFluid
           }
         }
@@ -24,24 +57,10 @@ export default function IndexPage() {
   return (
     <Layout>
       <SEO title="Home" />
-      <div css={[fullWidth, imgOuterWrapper]}>
-        <div css={imgInnerWrapper}>
-          <BackgroundImage
-            fluid={queryResult.placeholderImage.childImageSharp.fluid}
-            css={img}
-          />
-          <div css={heroContentWrapper}>
-            <Logo
-              css={css`
-                width: 300px;
-                height: 300px;
-              `}
-            />
-            <h1>Abiding in Motherhood</h1>
-          </div>
-        </div>
-      </div>
-      <div css={slogan}>
+      <Hero fluidImage={images.hero.childImageSharp.fluid}>
+        <h1>Abiding in Motherhood</h1>
+      </Hero>
+      <div css={[allThirds, slogan]}>
         Our aim is to help nurture the hearts of mothers in every season, to
         know God's word, and abide faithfully in Christ
       </div>
@@ -52,47 +71,46 @@ export default function IndexPage() {
           <br />- John 15:4
         </div>
       </div>
+      <div css={spacer} />
+      <div css={[block, leftTwoThirds]} />
+      <h3 css={sectionLabel}>studies</h3>
+      <div css={spacer} />
+      {/* Programaticaly figure this crap out */}
+      <div css={leftThird}>
+        <Img css={lessonImage} fluid={images.lesson1.childImageSharp.fluid} />
+        <a css={lessonLink(colors.tan)}>week 1</a>
+      </div>
+      <div css={centerThird}>
+        <Img css={lessonImage} fluid={images.lesson2.childImageSharp.fluid} />
+        <a css={lessonLink(colors.darkCyan)}>week 2</a>
+      </div>
+      <div css={rightThird}>
+        <Img css={lessonImage} fluid={images.lesson3.childImageSharp.fluid} />
+        <a css={lessonLink(colors.tan)}>week 3</a>
+      </div>
+      <div css={spacer} />
+      <h3 css={[sectionLabel, leftThird]}>calendar</h3>
+      <div css={[block, rightTwoThirds]} />
+      <div css={spacer} />
     </Layout>
   )
 }
 
-const fullWidth = css`
-  grid-column: 1 / span 5;
-`
-const imgOuterWrapper = css`
-  height: 90vh;
-  position: relative;
-`
-
-const imgInnerWrapper = css`
-  height: 90vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const img = css`
-  height: 90vh;
-  width: 100%;
-`
-
 const slogan = css`
-  grid-column: 2 / span 3;
   font-weight: bold;
-  color: #504840;
+  color: ${colors.darkText};
   line-height: 2;
   font-size: 2rem;
-  padding: 4rem 0;
+  padding: ${spacing.l} 0;
 `
 
 const verseWrapper = css`
-  background-color: #d8d5ca;
-  padding: 4rem 0;
+  background-color: ${colors.tan};
+  padding: ${spacing.l} 0;
 `
 const verse = css`
   text-align: right;
-  color: #504840;
+  color: ${colors.darkText};
   width: 60%;
   margin: 0 auto;
   font-size: 2.2rem;
@@ -100,14 +118,35 @@ const verse = css`
   line-height: 2;
 `
 
-const heroContentWrapper = css`
-  position: absolute;
+const block = css`
+  height: 20px;
+  background-color: ${colors.blue};
+  align-self: center;
+`
+const sectionLabel = css`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-content: center;
   justify-content: center;
-  color: white;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  height: 50px;
+  font-weight: 900;
+`
+
+const lessonLink = (backgroundColor: string) => css`
+  display: flex;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${backgroundColor};
+  color: ${meetsContrastGuidelines(backgroundColor, colors.darkText).AA
+    ? colors.darkText
+    : colors.offWhite};
+`
+
+const lessonImage = css`
+  height: 600px;
   width: 100%;
-  height: 100%;
-  background-color: #8E99A17F;
 `

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 import { Link } from "gatsby"
+import { colors } from "../styles"
 
 export default function Header() {
   return (
@@ -24,7 +25,7 @@ export default function Header() {
 }
 
 const headerWrapper = css`
-  background-color: #ba6f2e;
+  background-color: ${colors.orange};
   padding: 1rem 0;
 `
 const header = css`
@@ -33,7 +34,7 @@ const header = css`
 `
 const link = css`
   font-family: sans-serif;
-  color: #e3e2de;
+  color: ${colors.offWhite};
   text-decoration: none;
   font-size: 1.6rem;
   padding: 0 1rem;
