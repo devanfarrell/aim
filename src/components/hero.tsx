@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
-import Logo from "../components/logo"
+import Logo from "./logo"
 import { fullWidth, colors } from "../styles"
 import { ReactNode } from "react"
 import BackgroundImage, { IFluidObject } from "gatsby-background-image-es5"
@@ -46,7 +46,8 @@ const heroContentWrapper = css`
   color: white;
   width: 100%;
   height: 100%;
-  background-color: ${colors.brown};
+  background-color: ${colors.greyFilter};
+  text-align: center;
 `
 const img = css`
   height: 90vh;

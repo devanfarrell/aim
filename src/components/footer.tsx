@@ -1,15 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
-import { colors } from "../styles"
+import { colors, grid, leftThird } from "../styles"
+import { FacebookLogo } from "./logo"
 
 export default function Footer() {
   return (
-    <footer css={footerWrapper}>
-      <div css={footerContect}>
-        <a>F</a>
-        <span>© AIM {new Date().getFullYear()}</span>
-        <a>Contact</a>
-      </div>
+    <footer css={[footerWrapper, grid]}>
+      <a
+        css={leftThird}
+        target="_blank"
+        href="https://www.facebook.com/embracegracecctc/"
+      >
+        <FacebookLogo css={logo} />
+      </a>
+      <span>© AIM {new Date().getFullYear()}</span>
+      <a css={contact} href="mailto:aimcctc@gmail.com">
+        Contact
+      </a>
     </footer>
   )
 }
@@ -17,13 +24,12 @@ export default function Footer() {
 const footerWrapper = css`
   background-color: ${colors.blue};
   padding: 1rem 0;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 `
-const footerContect = css`
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  max-width: 960px;
-  flex: 1 1 auto;
+const logo = css`
+  height: 30px;
+  width: 30px;
+`
+const contact = css`
+  color: white;
 `
